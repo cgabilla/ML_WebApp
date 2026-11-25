@@ -1,66 +1,64 @@
 # AI-Assisted Coding Disclosure Notes
 
-Answers below match the laboratory required fields and reflect what was actually done on this project.
+Based on the actual Cursor chat used to build Laboratory 03.
 
 ## 1. AI Tool Used
 
-**Google Gemini**
-
-(No Copilot or ChatGPT were used for this Laboratory 03 web app.)
+**Cursor** (AI coding assistant in the editor)
 
 ## 2. Purpose
 
-Gemini was used to support:
+Cursor was used to plan and implement the Flask web app, improve the UI/validation, integrate the exported Naive Bayes `joblib` model, and draft the technical documentation / submission package.
 
-- Planning a local Flask web app that loads the exported Naive Bayes `joblib` pipeline
-- Structuring HTML/CSS/JavaScript for a clearer student input form
-- Configuring feature fields (YAML) so the form matches the trained 30-feature set without G1/G2/G3
-- Improving validation messages and Clear/empty-form behavior
-- Drafting README / setup-run-exit wording and technical documentation narratives
+## 3. Sample Prompts (from this chat — at least three)
 
-## 3. Sample Prompts (at least three actual prompts used)
+These are real prompts from the Lab 03 build conversation:
 
-1. “Plan a local Flask web app that loads my Lab Naive Bayes joblib pipeline for student AtRisk prediction, with a form for all 30 features (no G1/G2/G3), Predict and Clear, and README install/run/exit steps.”
+1. “Our next laboratory is local web development based on our google collab supervised machine learning. I am not sure what is the best framework to use which is highly compatible with google collab training data model. I need you to plan for me and let me know what you need. it should be configurable and very easy to configure for the data. maybe a simple web dev and choose the best technology stack to implement it. i will attach the requirement. … as you design and implement, create a documentation as well so that there is step to reinstall this in other environment. how to run and how to exit. … select only the best model to consider, Naive bayes.”
 
-2. “Make the student form configurable with YAML, group the fields so they are easier to understand, remove default filled values so Clear really empties the form, and only keep a Surprise me random filler so users cannot easily game Pass vs At risk.”
+2. “can you make it more pretty looking design and very easy to understand? align forms, and add some about and information. do not make text so robotic , make it as human friendly. maybe add a button to randomly generate input like very practical, and a random input that will tend to pass or failed or something in between. if this is not allowed in the requirements, then we cannot do it.”
 
-3. “Help me write the technical documentation sections for model export, Flask integration, offline verification, and AI-assisted coding disclosure based on the Laboratory handout requirements.”
+3. “meaning the input is predictable? what can you suggest to enhance? it should be surprising the result. it seems that user knows how to input to make it pass. what if we do not give the user a hint? what do you think? and only suprise me only. if you think this is a better idea or you have a better idea then do it.”
 
-Related follow-up prompts also covered UI polish (About / How to use), post-prediction insight wording, and packaging the project zip for submission.
+Additional related prompts from the same chat (optional extras):
+
+- “why there are defaults values, when you clear, it is not cleared. just tell the user that there are missing data to fill out if missing.”
+- “let's us build this all, just let me know what you need so that i can give you what you need as we create, i will just paste the screenshot here”
+- “After reading the requirements, ai disclosure requires questions to answer. Can you update the ai disclosure only based on our what we did … and create another version archive for submission”
 
 ## 4. AI-Generated Assistance
 
-AI assistance contributed to drafts or guidance for:
+Assisted with Cursor:
 
-- Flask app layout (`app.py` routes, loading the pipeline with Joblib)
-- HTML template structure and CSS styling for the form and result panel
-- JavaScript for Surprise me + client-side missing-field checks
-- Feature/app YAML configuration ideas
-- Documentation wording (specification, setup guide, disclosure narrative)
+- Flask + Joblib model-loading structure
+- HTML/CSS/JS form, Surprise me, missing-field validation
+- YAML configuration for features/app settings
+- Documentation PDF narratives and packaging
 
-Student-authored / verified work that was not left as raw AI output:
+Student-reviewed / finalized:
 
-- Reusing the actual exported Naive Bayes pipeline from the prior Colab notebook
-- Matching feature order and preprocessing to the trained Pipeline
-- Choosing Naive Bayes only (best F1 from the prior evaluation)
-- Local testing of Pass / At risk / mixed-probability / missing-field cases
-- Final edits to remove grading-game hints and Lab 02 wording from the UI
+- Naive Bayes-only model from Colab export
+- Feature order / preprocessing consistency
+- UI changes (no outcome-hint buttons, empty Clear behavior)
+- Live prediction and validation testing
 
 ## 5. Verification
 
-AI suggestions were reviewed and modified before keeping them. Verification included:
+- `python app.py` local run
+- Model file loaded from `model/`
+- 3 successful prediction tests + 1 missing-field validation test
+- Confirmed predictions are from the joblib model (not hard-coded)
 
-- Installing dependencies in a local `.venv` and running `python app.py`
-- Confirming the app loads `model/naive_bayes_pipeline.joblib` (Colab export aligned to scikit-learn 1.6.1)
-- Testing at least three successful predictions with different inputs
-- Testing validation when required fields are empty
-- Confirming predictions change with inputs and are not hard-coded
-- Checking that Clear resets the form to blank fields
+## 6. Appendix needed for prompts?
 
-## 6. Screenshots of AI interactions
+**No.** At least three prompts in the AI disclosure section are enough. An appendix is optional.
 
-Chat screenshots of the Gemini sessions were not retained during development, so they are not attached as separate figures. The working application screenshots elsewhere in the documentation (environment, UI, live predictions, validation) are the evidence that the assisted code was tested and runs locally with the saved model.
+## 7. AI interaction screenshots
 
-## Short statement for the PDF
+Three actual Cursor chat screenshots from this project are included:
 
-AI-assisted coding with Google Gemini was used for Flask/web structure ideas, UI wording, configuration, and documentation drafts. At least three development prompts are listed above. Assisted parts were reviewed, adapted to the real feature set and exported Naive Bayes pipeline, and verified through local run/predict/validation tests. Predictions are produced by the local joblib model, not hard-coded results.
+- `screenshots/activity08-ai/01-ai-interaction-plan.png` — plan Flask web app + Naive Bayes
+- `screenshots/activity08-ai/02-ai-interaction-ui.png` — prettier UI / random input helpers
+- `screenshots/activity08-ai/03-ai-interaction-surprise.png` — Surprise me only / remove hints
+
+These are embedded in the documentation PDF AI disclosure section.

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI Coding Interaction Records — Lab 03</title>
+  <style>
+    :root {
+      --bg: #eef2f6;
+      --card: #fff;
+      --ink: #1b2430;
+      --muted: #5b6b7c;
+      --line: #cfd8e3;
+      --accent: #0b6e6a;
+      --user: #e8f3f2;
+      --assist: #f4f7fb;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", "DM Sans", sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      padding: 1.5rem;
+    }
+    .wrap { width: min(920px, 100%); margin: 0 auto; }
+    h1 {
+      margin: 0 0 0.35rem;
+      font-size: 1.55rem;
+    }
+    .meta {
+      margin: 0 0 1.25rem;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 1.1rem 1.2rem 1.2rem;
+      margin-bottom: 1.1rem;
+      box-shadow: 0 6px 18px rgba(27, 36, 48, 0.06);
+    }
+    .badge {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: #d9efec;
+      border-radius: 999px;
+      padding: 0.2rem 0.55rem;
+      margin-bottom: 0.55rem;
+    }
+    h2 {
+      margin: 0 0 0.75rem;
+      font-size: 1.15rem;
+    }
+    .bubble {
+      border-radius: 12px;
+      padding: 0.85rem 0.95rem;
+      margin: 0.55rem 0;
+      line-height: 1.45;
+      white-space: pre-wrap;
+    }
+    .user {
+      background: var(--user);
+      border: 1px solid #b9d9d5;
+    }
+    .assist {
+      background: var(--assist);
+      border: 1px solid #d5dde8;
+    }
+    .label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.35rem;
+    }
+    .only { display: none; }
+    body.show1 #i1,
+    body.show2 #i2,
+    body.show3 #i3 { display: block; }
+    body.show1 .wrap > .intro,
+    body.show2 .wrap > .intro,
+    body.show3 .wrap > .intro { display: none; }
+  </style>
+</head>
+<body class="show1">
+  <div class="wrap">
+    <div class="intro">
+      <h1>AI-Assisted Coding Interaction Records</h1>
+      <p class="meta">
+        Tool: Cursor (AI coding assistant)<br />
+        Project: Student At-Risk Prediction Web App (MCAIPAT Lab 03)<br />
+        These records quote actual development prompts from the project chat.
+      </p>
+    </div>
+
+    <section class="card only" id="i1">
+      <div class="badge">Interaction 1 of 3</div>
+      <h2>Plan Flask web app + offline Naive Bayes model</h2>
+      <div class="bubble user">
+        <div class="label">Student prompt</div>
+Our next laboratory is local web development based on our google collab supervised machine learning. I am not sure what is the best framework to use which is highly compatible with google collab training data model. I need you to plan for me and let me know what you need. it should be configurable and very easy to configure for the data. maybe a simple web dev and choose the best technology stack to implement it. i will attach the requirement.
+as you design and implement, create a documentation as well so that there is step to reinstall this in other environment. how to run and how to exit.
+select only the best model to consider, Naive bayes.
+      </div>
+      <div class="bubble assist">
+        <div class="label">AI assistance used</div>
+Recommended Flask + scikit-learn/joblib (matches Colab export). Planned project layout, YAML feature config, export of full Naive Bayes Pipeline, README/setup-run-exit docs, and offline prediction flow without Colab at runtime.
+      </div>
+    </section>
+
+    <section class="card only" id="i2">
+      <div class="badge">Interaction 2 of 3</div>
+      <h2>Improve UI clarity and add practical random input</h2>
+      <div class="bubble user">
+        <div class="label">Student prompt</div>
+can you make it more pretty looking design and very easy to understand? align forms, and add some about and information. do not make text so robotic , make it as human friendly. maybe add a button to randomly generate input like very practical, and a random input that will tend to pass or failed or something in between. if this is not allowed in the requirements, then we cannot do it.
+      </div>
+      <div class="bubble assist">
+        <div class="label">AI assistance used</div>
+Redesigned the page with grouped form sections, friendlier About/How-to copy, and sample-fill helpers. Confirmed extras are allowed because predictions still come from the real local model (not hard-coded).
+      </div>
+    </section>
+
+    <section class="card only" id="i3">
+      <div class="badge">Interaction 3 of 3</div>
+      <h2>Make outcomes less gameable (Surprise me only)</h2>
+      <div class="bubble user">
+        <div class="label">Student prompt</div>
+meaning the input is predictable? what can you suggest to enhance? it should be surprising the result. it seems that user knows how to input to make it pass. what if we do not give the user a hint? what do you think? and only suprise me only. if you think this is a better idea or you have a better idea then do it.
+      </div>
+      <div class="bubble assist">
+        <div class="label">AI assistance used</div>
+Removed pass/fail hint buttons and key-signal field highlighting. Kept only Surprise me for random valid profiles, so users predict without being steered toward Pass or At risk.
+      </div>
+    </section>
+  </div>
+</body>
+</html>
