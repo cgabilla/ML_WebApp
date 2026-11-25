@@ -1,0 +1,6 @@
+Naive Bayes student AtRisk pipeline (from Colab Lab 02 export)
+python: 3.12
+scikit-learn: 1.6.1 (matched to Colab export)
+source_file: trained_model.joblib -> naive_bayes_pipeline.joblib
+target: AtRisk = 1 if G3 < 10 else 0
+notes: Full Pipeline (preprocess + GaussianNB) from Gabilla_Cyrus_SupervisedML.ipynb

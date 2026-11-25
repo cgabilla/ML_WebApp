@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Student At-Risk Web App — Class Presentation</title>
+<style>
+  :root {
+    --bg: #f7f3ec;
+    --ink: #1f2328;
+    --muted: #5b6470;
+    --card: #fffdf9;
+    --line: #e4ddd0;
+    --accent: #c2410c;
+    --accent-soft: #f6e3d6;
+    --pass: #15803d;
+    --pass-soft: #dcf3e4;
+    --risk: #b91c1c;
+    --risk-soft: #fbe0e0;
+    --code-bg: #22262b;
+    --code-ink: #e8e6e3;
+    --shadow: 0 10px 30px rgba(31, 35, 40, 0.10);
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    height: 100%;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ---------- Slide stage ---------- */
+  .stage { position: fixed; inset: 0; overflow: hidden; }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    padding: 5vh 7vw;
+    overflow-y: auto;
+    animation: fade 0.35s ease;
+  }
+  .slide.active { display: flex; }
+
+  @keyframes fade {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  h1, h2, h3 { font-family: Georgia, "Times New Roman", serif; font-weight: 700; line-height: 1.1; margin: 0 0 0.4em; }
+  h1 { font-size: clamp(2.2rem, 5vw, 4rem); letter-spacing: -0.02em; }
+  h2 { font-size: clamp(1.6rem, 3.4vw, 2.7rem); }
+  h3 { font-size: clamp(1.15rem, 2.1vw, 1.5rem); }
+  p, li { font-size: clamp(0.98rem, 1.5vw, 1.3rem); line-height: 1.5; }
+  .muted { color: var(--muted); }
+  .accent { color: var(--accent); }
+
+  .kicker {
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: clamp(0.7rem, 1.1vw, 0.85rem);
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 0.6em;
+  }
+
+  ul { margin: 0.3em 0 0; padding-left: 1.2em; }
+  li { margin: 0.35em 0; }
+
+  .grid { display: grid; gap: 1.1rem; }
+  .grid-2 { grid-template-columns: 1fr 1fr; }
+  .grid-3 { grid-template-columns: repeat(3, 1fr); }
+  @media (max-width: 760px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 1.1rem 1.3rem;
+    box-shadow: var(--shadow);
+  }
+  .card h3 { margin-bottom: 0.35em; }
+  .card p, .card li { font-size: clamp(0.88rem, 1.3vw, 1.08rem); }
+
+  .pill {
+    display: inline-block;
+    background: var(--accent-soft);
+    color: var(--accent);
+    border-radius: 999px;
+    padding: 0.25em 0.8em;
+    font-size: clamp(0.75rem, 1.1vw, 0.9rem);
+    font-weight: 700;
+    margin: 0.15em 0.3em 0.15em 0;
+  }
+
+  /* ---------- Package list ---------- */
+  .pkg-list { display: grid; gap: 0.5rem; margin-top: 0.3em; }
+  .pkg { display: grid; grid-template-columns: minmax(120px, 0.9fr) 2fr; gap: 0.8rem; align-items: baseline; background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 0.55rem 0.9rem; box-shadow: var(--shadow); }
+  .pkg-name { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-weight: 700; color: var(--accent); font-size: clamp(0.85rem, 1.25vw, 1.05rem); }
+  .pkg-use { font-size: clamp(0.82rem, 1.2vw, 1rem); }
+  @media (max-width: 760px) { .pkg { grid-template-columns: 1fr; gap: 0.15rem; } }
+
+  /* ---------- Title slide ---------- */
+  .title-slide { justify-content: center; }
+  .title-slide .course { margin-bottom: 1.2em; }
+  .title-slide .meta { margin-top: 1.6em; color: var(--muted); font-size: clamp(0.95rem, 1.5vw, 1.2rem); }
+
+  /* ---------- Code ---------- */
+  pre {
+    background: var(--code-bg);
+    color: var(--code-ink);
+    border-radius: 14px;
+    padding: 1rem 1.2rem;
+    overflow-x: auto;
+    font-size: clamp(0.75rem, 1.2vw, 0.95rem);
+    line-height: 1.5;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    box-shadow: var(--shadow);
+    margin: 0.4rem 0;
+  }
+  .inline-code {
+    background: #efe9dd;
+    border-radius: 6px;
+    padding: 0.1em 0.4em;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.9em;
+  }
+
+  /* ---------- Full-flow diagram ---------- */
+  .flowmap { display: flex; flex-direction: column; align-items: center; gap: 0.35rem; margin-top: 0.4em; }
+  .frow { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; justify-content: center; width: 100%; }
+  .node {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 0.6rem 0.9rem;
+    text-align: center;
+    box-shadow: var(--shadow);
+    font-size: clamp(0.78rem, 1.2vw, 0.98rem);
+    font-weight: 600;
+    min-width: 90px;
+  }
+  .node .s { display: block; color: var(--muted); font-size: 0.82em; font-weight: 400; margin-top: 0.15em; }
+  .node.good { border-color: var(--pass); background: var(--pass-soft); }
+  .node.bad { border-color: var(--risk); background: var(--risk-soft); }
+  .node.accent { border-color: var(--accent); background: var(--accent-soft); }
+  .arrow { color: var(--accent); font-size: 1.4rem; font-weight: 700; display: flex; flex-direction: column; align-items: center; line-height: 1; }
+  .arrow-down { color: var(--accent); font-size: 1.3rem; line-height: 1; display: flex; flex-direction: column; align-items: center; }
+  .arrow .msg, .arrow-down .msg { font-size: 0.58rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 0.2em; white-space: nowrap; }
+  .objective { background: var(--card); border: 1px dashed var(--accent); border-radius: 12px; padding: 0.55rem 1rem; font-size: clamp(0.85rem, 1.3vw, 1.05rem); margin-bottom: 0.7rem; box-shadow: var(--shadow); }
+  .objective strong { color: var(--accent); }
+  .branch { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; width: 100%; margin-top: 0.2em; }
+  .branch-col { display: flex; flex-direction: column; align-items: center; gap: 0.3rem; }
+  .branch-col .label { font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; }
+  .branch-col.bad .label { color: var(--risk); }
+  .branch-col.good .label { color: var(--pass); }
+  @media (max-width: 760px) { .branch { grid-template-columns: 1fr; } }
+
+  /* ---------- Screenshots ---------- */
+  figure.shot { margin: 0; }
+  figure.shot img {
+    width: 100%;
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
+    display: block;
+    background: #fff;
+  }
+  figure.shot figcaption { color: var(--muted); font-size: clamp(0.75rem, 1.05vw, 0.88rem); margin-top: 0.4em; text-align: center; }
+  .thumb-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.6rem; margin-top: 0.6em; }
+  .thumb-strip img { width: 100%; border-radius: 8px; border: 1px solid var(--line); box-shadow: var(--shadow); }
+  @media (max-width: 760px) { .thumb-strip { grid-template-columns: 1fr 1fr; } }
+
+  /* ---------- Demo slide ---------- */
+  .demo-steps { counter-reset: step; list-style: none; padding-left: 0; margin: 0; }
+  .demo-steps li { position: relative; padding-left: 2.4em; margin: 0.55em 0; }
+  .demo-steps li::before {
+    counter-increment: step;
+    content: counter(step);
+    position: absolute;
+    left: 0; top: 0.05em;
+    width: 1.7em; height: 1.7em;
+    background: var(--accent);
+    color: #fff;
+    border-radius: 50%;
+    display: grid; place-items: center;
+    font-weight: 700;
+    font-size: 0.85em;
+  }
+
+  .callout {
+    border-left: 5px solid var(--accent);
+    background: var(--accent-soft);
+    border-radius: 0 12px 12px 0;
+    padding: 0.7rem 1.1rem;
+    margin-top: 0.9rem;
+    font-size: clamp(0.9rem, 1.35vw, 1.1rem);
+  }
+  .callout.green { border-color: var(--pass); background: var(--pass-soft); }
+  .callout.red { border-color: var(--risk); background: var(--risk-soft); }
+
+  /* ---------- Chrome ---------- */
+  .progress { position: fixed; top: 0; left: 0; height: 5px; background: var(--accent); width: 0; z-index: 50; transition: width 0.3s ease; }
+  .counter {
+    position: fixed; bottom: 14px; right: 18px;
+    background: rgba(31,35,40,0.85); color: #fff;
+    padding: 0.3em 0.7em; border-radius: 999px;
+    font-size: 0.8rem; z-index: 50; font-variant-numeric: tabular-nums;
+  }
+  .help { position: fixed; bottom: 14px; left: 18px; color: var(--muted); font-size: 0.78rem; z-index: 50; }
+  .notes {
+    position: fixed; left: 0; right: 0; bottom: 0;
+    background: rgba(34,38,43,0.96); color: #e8e6e3;
+    padding: 1rem 8vw; font-size: 0.95rem; line-height: 1.5;
+    transform: translateY(100%); transition: transform 0.25s ease; z-index: 60;
+    max-height: 40vh; overflow-y: auto;
+  }
+  .notes.show { transform: translateY(0); }
+  .notes strong { color: #f4b183; }
+
+  /* ---------- Print / PDF ---------- */
+  @media print {
+    .progress, .counter, .help, .notes { display: none !important; }
+    .stage { position: static; overflow: visible; }
+    .slide { display: flex !important; position: relative; inset: auto; page-break-after: always; min-height: 100vh; animation: none; }
+  }
+</style>
+</head>
+<body>
+  <div class="progress" id="progress"></div>
+  <div class="stage" id="stage">
+
+    <!-- 1. Title -->
+    <section class="slide title-slide active" data-notes="Introduce yourself and the course. One sentence: this is a local web app that predicts if a student is at risk, using only background and behavior.">
+      <p class="kicker course">MCAIPAT · Laboratory 03</p>
+      <h1>Will this student pass Portuguese?</h1>
+      <p class="muted" style="font-size:clamp(1.1rem,2vw,1.5rem);max-width:22ch;">A simple early-warning web app powered by a Naive Bayes model.</p>
+      <div class="meta">
+        <p><strong>Author:</strong> Cyrus Gabilla</p>
+        <p><strong>Course:</strong> Developing a Web App Prototype with Integrated SML Prediction Model</p>
+      </div>
+    </section>
+
+    <!-- 2. Agenda -->
+    <section class="slide" data-notes="Quick roadmap. Keep to ~20 seconds. The deck ends with a live demo.">
+      <p class="kicker">Overview</p>
+      <h2>What we'll cover</h2>
+      <div class="grid grid-2">
+        <ul>
+          <li>The problem &amp; the idea</li>
+          <li>What the app does</li>
+          <li>Tech stack &amp; dependencies</li>
+          <li>Architecture &amp; full request flow</li>
+          <li>The model, export &amp; .joblib</li>
+        </ul>
+        <ul>
+          <li>The data &amp; features</li>
+          <li>Config-driven design</li>
+          <li>UI walkthrough</li>
+          <li>Setup &amp; run (any OS)</li>
+          <li><strong>Live demo</strong></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 3. Problem -->
+    <section class="slide" data-notes="Motivate: teachers want to help students BEFORE final grades, not after.">
+      <p class="kicker">The problem</p>
+      <h2>Spot trouble <span class="accent">before</span> finals — not after</h2>
+      <div class="grid grid-2">
+        <div class="card">
+          <h3>Why it matters</h3>
+          <p>By the time final grades (G3) exist, it's often too late to intervene. Early signals let a school offer support in time.</p>
+        </div>
+        <div class="card">
+          <h3>The catch</h3>
+          <p>Early on, we don't have period grades yet. So can we flag risk from <strong>background and behavior alone</strong>?</p>
+        </div>
+      </div>
+      <div class="callout">Goal: a realistic early-warning check a teacher could actually use.</div>
+    </section>
+
+    <!-- 4. Big idea -->
+    <section class="slide" data-notes="Core design decision: G1/G2/G3 are deliberately excluded.">
+      <p class="kicker">The big idea</p>
+      <h2>Predict from the student, not the score</h2>
+      <div class="grid grid-3">
+        <div class="card"><h3>Inputs</h3><p>Home background, family, study habits, school life, daily routine.</p></div>
+        <div class="card"><h3>Model</h3><p>Gaussian Naive Bayes trained on the UCI Portuguese dataset.</p></div>
+        <div class="card"><h3>Output</h3><p>“Likely to pass” or “May need support”, plus a confidence.</p></div>
+      </div>
+      <div class="callout red"><strong>Deliberately excluded:</strong> period grades G1, G2 and final grade G3 are never used as inputs.</div>
+    </section>
+
+    <!-- 5. What it does -->
+    <section class="slide" data-notes="Walk through user-facing features. Mention Surprise me as a fun entry point.">
+      <p class="kicker">What the app does</p>
+      <h2>A single page that does the whole job</h2>
+      <div class="grid grid-2">
+        <div class="card">
+          <h3>For the user</h3>
+          <ul>
+            <li>Fill a 30-field student profile (or hit <strong>Surprise me</strong>).</li>
+            <li>Click <strong>Predict outcome</strong>.</li>
+            <li>Get a label, a probability bar, and plain-language insights.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Under the hood</h3>
+          <ul>
+            <li>Validates every answer against a config file.</li>
+            <li>Builds a one-row table in the exact training order.</li>
+            <li>Runs the saved model <strong>offline</strong> — no cloud.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. Tech stack -->
+    <section class="slide" data-notes="Keep short. Point: simple, no-build, offline. No React, no npm.">
+      <p class="kicker">Tech stack</p>
+      <h2>Small, offline, no-build</h2>
+      <div class="grid grid-3">
+        <div class="card"><h3>Backend</h3><p>Python 3.12 · Flask · Jinja2 templates</p></div>
+        <div class="card"><h3>Machine learning</h3><p>scikit-learn · joblib · pandas · numpy</p></div>
+        <div class="card"><h3>Frontend</h3><p>Hand-written HTML, CSS &amp; vanilla JS — no framework</p></div>
+        <div class="card"><h3>Config</h3><p>PyYAML — app settings &amp; form fields</p></div>
+        <div class="card"><h3>Model file</h3><p>A single <span class="inline-code">.joblib</span> pipeline</p></div>
+        <div class="card"><h3>Fonts</h3><p>Google Fonts (DM Sans + Fraunces)</p></div>
+      </div>
+    </section>
+
+    <!-- Dependencies -->
+    <section class="slide" data-notes="Walk through requirements.txt. Each package has one clear job: flask=web, pandas=one-row frame, numpy=arrays, scikit-learn=the model pipeline, joblib=save/load the model, pyyaml=read the two YAML configs.">
+      <p class="kicker">Dependencies</p>
+      <h2>What each package in requirements.txt does</h2>
+      <div class="pkg-list">
+        <div class="pkg"><span class="pkg-name">flask</span><span class="pkg-use">Web framework — routes, form handling, and rendering the page.</span></div>
+        <div class="pkg"><span class="pkg-name">pandas</span><span class="pkg-use">Builds the one-row DataFrame the model predicts on.</span></div>
+        <div class="pkg"><span class="pkg-name">numpy</span><span class="pkg-use">Numeric arrays; underpins pandas and scikit-learn.</span></div>
+        <div class="pkg"><span class="pkg-name">scikit-learn</span><span class="pkg-use">The ML pipeline: StandardScaler, OneHotEncoder, GaussianNB.</span></div>
+        <div class="pkg"><span class="pkg-name">joblib</span><span class="pkg-use">Saves and loads the trained model file (.joblib).</span></div>
+        <div class="pkg"><span class="pkg-name">pyyaml</span><span class="pkg-use">Reads app_config.yaml and features.yaml.</span></div>
+      </div>
+      <div class="callout">Install them all with <span class="inline-code">pip install -r requirements.txt</span>.</div>
+    </section>
+
+    <!-- 7. Architecture + FULL flow diagram -->
+    <section class="slide" data-notes="Trace one submit end to end. Slow down here. Point at each box, then the two branches: errors vs valid. Valid branch runs the model and renders the result.">
+      <p class="kicker">Architecture</p>
+      <h2>Full request flow — from click to result</h2>
+      <div class="objective"><strong>Objective:</strong> turn one form submission into a model prediction and render the result — fully offline, no cloud.</div>
+      <div class="flowmap">
+        <div class="frow">
+          <div class="node">User fills form<span class="s">or “Surprise me”</span></div>
+          <div class="arrow">→<span class="msg">POST /predict</span></div>
+          <div class="node accent">Flask: predict()<span class="s">app.py</span></div>
+          <div class="arrow">→<span class="msg">request.form</span></div>
+          <div class="node">validate_and_parse()<span class="s">required · choices · min/max</span></div>
+        </div>
+        <div class="arrow-down">↓</div>
+        <div class="branch">
+          <div class="branch-col bad">
+            <div class="label">If errors</div>
+            <div class="node bad">Errors found</div>
+            <div class="arrow-down">↓<span class="msg">errors list</span></div>
+            <div class="node">Re-render form<span class="s">with messages</span></div>
+          </div>
+          <div class="branch-col good">
+            <div class="label">If valid</div>
+            <div class="node good">values_to_dataframe()<span class="s">feature_order.json</span></div>
+            <div class="arrow-down">↓<span class="msg">one-row frame</span></div>
+            <div class="node">PIPELINE.predict + predict_proba<span class="s">.joblib model</span></div>
+            <div class="arrow-down">↓<span class="msg">class + probs</span></div>
+            <div class="node">build_insights()<span class="s">plain-language notes</span></div>
+            <div class="arrow-down">↓<span class="msg">result dict</span></div>
+            <div class="node accent">Render result panel<span class="s">label + bars + insights</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="callout">The page reloads with the result — a classic server-rendered POST flow. No separate API, no build step.</div>
+    </section>
+
+    <!-- 8. Model -->
+    <section class="slide" data-notes="Naive Bayes in one line: estimates the probability of each class from the features and picks the higher. The saved pipeline re-applies the same preprocessing as training.">
+      <p class="kicker">The model</p>
+      <h2>Gaussian Naive Bayes, saved as a pipeline</h2>
+      <div class="grid grid-2">
+        <div class="card">
+          <h3>Why this algorithm</h3>
+          <p>Chosen in Lab 02 for the best F1 / recall on the rare “at-risk” class — the class we most care about catching.</p>
+        </div>
+        <div class="card">
+          <h3>What's inside the file</h3>
+          <p>A full scikit-learn <span class="inline-code">Pipeline</span>:<br />
+          StandardScaler → OneHotEncoder → GaussianNB</p>
+        </div>
+      </div>
+      <div class="callout green">Because the whole pipeline is saved, the web app applies the <strong>exact same preprocessing</strong> used in training — no mismatch.</div>
+    </section>
+
+    <!-- From Colab to project -->
+    <section class="slide" data-notes="Show how the model file was produced. In Colab: joblib.dump the whole pipeline, then files.download it. Copy the downloaded file into the project's model/ folder. The screenshot shows the Colab export.">
+      <p class="kicker">Model export</p>
+      <h2>From Colab to your project</h2>
+      <div class="grid grid-2">
+        <div>
+          <p>Train in Colab, then save the whole pipeline and download it:</p>
+          <pre>import joblib
+from google.colab import files
+
+best_model = trained["Naive Bayes"]
+joblib.dump(best_model, "trained_model.joblib")
+files.download("trained_model.joblib")</pre>
+          <div class="callout green">Copy the downloaded file into the project's <span class="inline-code">model/</span> folder (as <span class="inline-code">naive_bayes_pipeline.joblib</span>).</div>
+        </div>
+        <figure class="shot">
+          <img src="../screenshots/activity02/01-colab-export-and-download.png" alt="Colab export and download" />
+          <figcaption>Exporting and downloading the Naive Bayes pipeline from Google Colab.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- What is joblib -->
+    <section class="slide" data-notes="Explain joblib: it serializes a Python object to disk. Here it stores the entire trained Pipeline (preprocessing + model). joblib.load restores the exact object so inference matches training. It is a frozen, portable snapshot.">
+      <p class="kicker">Model file</p>
+      <h2>What is a .joblib file?</h2>
+      <div class="grid grid-2">
+        <div>
+          <div class="card" style="margin-bottom:0.8rem;">
+            <h3>A saved Python object</h3>
+            <p>joblib serializes (saves) a Python object to disk. Here it stores the <strong>entire trained scikit-learn Pipeline</strong> — preprocessing + the Naive Bayes model — not just numbers.</p>
+          </div>
+          <div class="card">
+            <h3>Why the whole pipeline</h3>
+            <p>Loading it with <span class="inline-code">joblib.load()</span> restores the exact object, so the web app applies the <strong>same scaling and encoding</strong> used in training.</p>
+          </div>
+        </div>
+        <figure class="shot">
+          <img src="../screenshots/activity03/01-local-model-folder.png" alt="Local model folder" />
+          <figcaption>The .joblib file inside the project's <span class="inline-code">model/</span> folder.</figcaption>
+        </figure>
+      </div>
+      <pre>PIPELINE = joblib.load(MODEL_PATH)   # app.py, at startup</pre>
+      <div class="callout">Think of it as a “frozen snapshot” of the trained model — portable, offline, and identical to training.</div>
+    </section>
+
+    <!-- 9. Data -->
+    <section class="slide" data-notes="UCI Student Performance, Portuguese course. 30 input features in 4 UI groups. Target: AtRisk = 1 if G3 < 10.">
+      <p class="kicker">The data</p>
+      <h2>UCI Student Performance (Portuguese)</h2>
+      <div class="grid grid-2">
+        <div class="card">
+          <h3>30 input features</h3>
+          <p>Grouped in the form as:<br />
+          <span class="pill">Basics</span><span class="pill">Family &amp; support</span><span class="pill">School life</span><span class="pill">Daily life</span></p>
+        </div>
+        <div class="card">
+          <h3>Target label</h3>
+          <p><span class="inline-code">AtRisk = 1</span> if final grade <span class="inline-code">G3 &lt; 10</span>, else <span class="inline-code">0</span>.</p>
+        </div>
+      </div>
+      <div class="callout">G1, G2 and G3 are used only to <em>define</em> the label in training — never as model inputs.</div>
+    </section>
+
+    <!-- 10. Config-driven -->
+    <section class="slide" data-notes="Key engineering point: the form, the JS random generator, and the backend validation all read the same YAML. Change config, not code.">
+      <p class="kicker">Design detail</p>
+      <h2>Config-driven, not hard-coded</h2>
+      <div class="grid grid-2">
+        <div class="card">
+          <h3>app_config.yaml</h3>
+          <p>Titles, descriptions, model paths, labels, host/port, <span class="inline-code">show_probability</span>.</p>
+        </div>
+        <div class="card">
+          <h3>features.yaml</h3>
+          <p>Every field: name, label, type, choices, min/max, help text, importance.</p>
+        </div>
+      </div>
+      <pre># features.yaml (excerpt)
+- name: failures
+  label: Past class failures
+  type: integer
+  min: 0
+  max: 4
+  importance: high</pre>
+      <div class="callout">One source of truth feeds the HTML form, the client-side validation, and the server-side checks.</div>
+    </section>
+
+    <!-- 11. UI walkthrough (screenshots) -->
+    <section class="slide" data-notes="Show the real homepage. Top: hero + about cards + start of empty form. Bottom: remaining form sections + Predict/Clear. Point out fields are blank by default.">
+      <p class="kicker">The interface</p>
+      <h2>One clean page</h2>
+      <div class="grid grid-2">
+        <figure class="shot">
+          <img src="../screenshots/activity04/01-homepage-top.png" alt="Homepage top" />
+          <figcaption>Hero, about / how-to cards, and the start of the empty form.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="../screenshots/activity04/02-homepage-form-bottom.png" alt="Form bottom" />
+          <figcaption>Remaining form sections plus Predict and Clear actions.</figcaption>
+        </figure>
+      </div>
+      <div class="callout">All fields are blank by default, so the user must answer (or use <strong>Surprise me</strong>) before predicting.</div>
+    </section>
+
+    <!-- 12. Setup & Run -->
+    <section class="slide" data-notes="Portable setup for any OS with Python 3.12+. Create the venv once, activate (Linux/macOS vs Windows command), install requirements, then run. Show the terminal screenshot as proof it loads the model and serves 127.0.0.1:5000.">
+      <p class="kicker">Setup &amp; run</p>
+      <h2>Set up once, then run — on any OS with Python</h2>
+      <div class="grid grid-2">
+        <div>
+          <pre># 1. Create the environment (once)
+python3 -m venv .venv
+
+# 2. Activate it
+source .venv/bin/activate        # Linux / macOS
+.venv\Scripts\activate           # Windows
+
+# 3. Install dependencies
+pip install -r requirements.txt
+
+# 4. Run
+python app.py</pre>
+          <div class="callout green">Then open <strong>http://127.0.0.1:5000/</strong> · stop with <strong>Ctrl+C</strong>. Works on any OS with Python 3.12+.</div>
+        </div>
+        <figure class="shot">
+          <img src="../screenshots/activity03/02-python-app-running.png" alt="App running" />
+          <figcaption>Server running after <span class="inline-code">activate</span> + <span class="inline-code">python app.py</span>, loading the model.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- 13. DEMO (final slide) -->
+    <section class="slide" data-notes="LIVE DEMO. Env already activated. Do 'Surprise me' then Predict, then a manual at-risk profile (high failures + absences). Point out probability bars and insights. Screenshots below are backup if the live demo fails.">
+      <p class="kicker">Live demo</p>
+      <h2>Let's run it</h2>
+      <div class="grid grid-2">
+        <div>
+          <ol class="demo-steps">
+            <li>Activate env: <span class="inline-code">source .venv/bin/activate</span></li>
+            <li>Start: <span class="inline-code">python app.py</span></li>
+            <li>Open <span class="inline-code">127.0.0.1:5000</span></li>
+            <li><strong>Surprise me</strong> → <strong>Predict</strong></li>
+            <li>Try high <em>failures</em> &amp; <em>absences</em></li>
+            <li>Show probability bars &amp; insights</li>
+          </ol>
+        </div>
+        <div class="card">
+          <h3>What to highlight</h3>
+          <ul>
+            <li>Validation blocks empty / out-of-range answers</li>
+            <li>Prediction is instant and fully offline</li>
+            <li>Insights explain <em>why</em> a profile looks risky</li>
+          </ul>
+        </div>
+      </div>
+      <div class="thumb-strip">
+        <img src="../screenshots/activity06/01-predict-pass.png" alt="Pass result" title="Pass" />
+        <img src="../screenshots/activity06/02-predict-at-risk.png" alt="At risk result" title="At risk" />
+        <img src="../screenshots/activity06/03-predict-pass-mixed-proba.png" alt="Mixed probability" title="Mixed ~79/21" />
+        <img src="../screenshots/activity06/04-validation-missing-fields.png" alt="Validation" title="Validation" />
+      </div>
+      <p class="muted" style="font-size:0.8rem;margin-top:0.4rem;">Backup screenshots: pass · at risk · mixed probability · validation.</p>
+    </section>
+
+  </div>
+
+  <div class="counter" id="counter">1 / 16</div>
+  <div class="help">← → navigate · N notes · F fullscreen · P print/PDF</div>
+  <div class="notes" id="notes"></div>
+
+<script>
+  (function () {
+    const slides = Array.from(document.querySelectorAll(".slide"));
+    const counter = document.getElementById("counter");
+    const progress = document.getElementById("progress");
+    const notesEl = document.getElementById("notes");
+    let i = 0;
+
+    function show(n) {
+      i = Math.max(0, Math.min(slides.length - 1, n));
+      slides.forEach((s, idx) => s.classList.toggle("active", idx === i));
+      counter.textContent = (i + 1) + " / " + slides.length;
+      progress.style.width = ((i + 1) / slides.length * 100) + "%";
+      notesEl.textContent = slides[i].dataset.notes || "";
+      slides[i].scrollTop = 0;
+      location.hash = "#" + (i + 1);
+    }
+
+    function next() { show(i + 1); }
+    function prev() { show(i - 1); }
+
+    document.addEventListener("keydown", function (e) {
+      switch (e.key) {
+        case "ArrowRight": case "ArrowDown": case " ": case "PageDown":
+          e.preventDefault(); next(); break;
+        case "ArrowLeft": case "ArrowUp": case "PageUp":
+          e.preventDefault(); prev(); break;
+        case "Home": e.preventDefault(); show(0); break;
+        case "End": e.preventDefault(); show(slides.length - 1); break;
+        case "n": case "N":
+          notesEl.classList.toggle("show"); break;
+        case "f": case "F":
+          if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+          else document.exitFullscreen();
+          break;
+      }
+    });
+
+    document.getElementById("stage").addEventListener("click", function (e) {
+      if (e.target.closest("a")) return;
+      const x = e.clientX / window.innerWidth;
+      if (x > 0.5) next(); else prev();
+    });
+
+    const start = parseInt((location.hash || "#1").slice(1), 10);
+    show(isNaN(start) ? 0 : start - 1);
+  })();
+</script>
+</body>
+</html>

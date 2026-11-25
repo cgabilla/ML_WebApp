@@ -1,0 +1,306 @@
+features:
+- name: school
+  label: School
+  type: categorical
+  required: true
+  help: GP = Gabriel Pereira, MS = Mousinho da Silveira
+  choices:
+  - value: GP
+    label: Gabriel Pereira (GP)
+  - value: MS
+    label: Mousinho da Silveira (MS)
+  default: GP
+- name: sex
+  label: Sex
+  type: categorical
+  required: true
+  choices:
+  - value: F
+    label: Female
+  - value: M
+    label: Male
+  default: F
+- name: age
+  label: Age
+  type: integer
+  required: true
+  min: 15
+  max: 22
+  default: 17
+  help: Student age (15-22)
+- name: address
+  label: Home address type
+  type: categorical
+  required: true
+  choices:
+  - value: U
+    label: Urban
+  - value: R
+    label: Rural
+  default: U
+- name: famsize
+  label: Family size
+  type: categorical
+  required: true
+  choices:
+  - value: LE3
+    label: ≤ 3
+  - value: GT3
+    label: '> 3'
+  default: GT3
+- name: Pstatus
+  label: Parent cohabitation status
+  type: categorical
+  required: true
+  choices:
+  - value: T
+    label: Living together
+  - value: A
+    label: Apart
+  default: T
+- name: Medu
+  label: Mother education
+  type: integer
+  required: true
+  min: 0
+  max: 4
+  default: 2
+  help: 0=none … 4=higher education
+  importance: medium
+  importance_tip: Parent education often relates to outcomes
+- name: Fedu
+  label: Father education
+  type: integer
+  required: true
+  min: 0
+  max: 4
+  default: 2
+  help: 0=none … 4=higher education
+  importance: medium
+  importance_tip: Parent education often relates to outcomes
+- name: Mjob
+  label: Mother job
+  type: categorical
+  required: true
+  choices:
+  - value: teacher
+    label: Teacher
+  - value: health
+    label: Health
+  - value: services
+    label: Services
+  - value: at_home
+    label: At home
+  - value: other
+    label: Other
+  default: other
+- name: Fjob
+  label: Father job
+  type: categorical
+  required: true
+  choices:
+  - value: teacher
+    label: Teacher
+  - value: health
+    label: Health
+  - value: services
+    label: Services
+  - value: at_home
+    label: At home
+  - value: other
+    label: Other
+  default: other
+- name: reason
+  label: Reason for choosing school
+  type: categorical
+  required: true
+  choices:
+  - value: home
+    label: Close to home
+  - value: reputation
+    label: Reputation
+  - value: course
+    label: Course preference
+  - value: other
+    label: Other
+  default: course
+- name: guardian
+  label: Guardian
+  type: categorical
+  required: true
+  choices:
+  - value: mother
+    label: Mother
+  - value: father
+    label: Father
+  - value: other
+    label: Other
+  default: mother
+- name: traveltime
+  label: Travel time to school
+  type: integer
+  required: true
+  min: 1
+  max: 4
+  default: 1
+  help: 1=<15 min … 4=>1 hour
+- name: studytime
+  label: Weekly study time
+  type: integer
+  required: true
+  min: 1
+  max: 4
+  default: 2
+  help: 1=<2h … 4=>10h
+  importance: medium
+  importance_tip: Study habits help the model
+- name: failures
+  label: Past class failures
+  type: integer
+  required: true
+  min: 0
+  max: 4
+  default: 0
+  help: n if 1<=n<3, else 4 (UCI encoding)
+  importance: high
+  importance_tip: Often the strongest signal in this dataset
+- name: schoolsup
+  label: Extra school support
+  type: categorical
+  required: true
+  choices:
+  - value: 'yes'
+    label: true
+  - value: 'no'
+    label: false
+  default: 'no'
+- name: famsup
+  label: Family educational support
+  type: categorical
+  required: true
+  choices:
+  - value: 'yes'
+    label: true
+  - value: 'no'
+    label: false
+  default: 'yes'
+- name: paid
+  label: Extra paid classes
+  type: categorical
+  required: true
+  choices:
+  - value: 'yes'
+    label: true
+  - value: 'no'
+    label: false
+  default: 'no'
+- name: activities
+  label: Extra-curricular activities
+  type: categorical
+  required: true
+  choices:
+  - value: 'yes'
+    label: true
+  - value: 'no'
+    label: false
+  default: 'yes'
+- name: nursery
+  label: Attended nursery school
+  type: categorical
+  required: true
+  choices:
+  - value: 'yes'
+    label: true
+  - value: 'no'
+    label: false
+  default: 'yes'
+- name: higher
+  label: Wants higher education
+  type: categorical
+  required: true
+  choices:
+  - value: 'yes'
+    label: true
+  - value: 'no'
+    label: false
+  default: 'yes'
+  importance: high
+  importance_tip: Plans for higher education matter a lot
+- name: internet
+  label: Internet access at home
+  type: categorical
+  required: true
+  choices:
+  - value: 'yes'
+    label: true
+  - value: 'no'
+    label: false
+  default: 'yes'
+- name: romantic
+  label: In a romantic relationship
+  type: categorical
+  required: true
+  choices:
+  - value: 'yes'
+    label: true
+  - value: 'no'
+    label: false
+  default: 'no'
+- name: famrel
+  label: Family relationship quality
+  type: integer
+  required: true
+  min: 1
+  max: 5
+  default: 4
+  help: 1=very bad … 5=excellent
+- name: freetime
+  label: Free time after school
+  type: integer
+  required: true
+  min: 1
+  max: 5
+  default: 3
+  help: 1=very low … 5=very high
+- name: goout
+  label: Going out with friends
+  type: integer
+  required: true
+  min: 1
+  max: 5
+  default: 3
+  help: 1=very low … 5=very high
+- name: Dalc
+  label: Workday alcohol consumption
+  type: integer
+  required: true
+  min: 1
+  max: 5
+  default: 1
+  help: 1=very low … 5=very high
+- name: Walc
+  label: Weekend alcohol consumption
+  type: integer
+  required: true
+  min: 1
+  max: 5
+  default: 2
+  help: 1=very low … 5=very high
+- name: health
+  label: Current health status
+  type: integer
+  required: true
+  min: 1
+  max: 5
+  default: 4
+  help: 1=very bad … 5=very good
+- name: absences
+  label: Number of school absences
+  type: integer
+  required: true
+  min: 0
+  max: 93
+  default: 4
+  help: 0-93
+  importance: medium
+  importance_tip: Missed days can raise concern

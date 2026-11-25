@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{{ app_config.app.title }}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,650;0,9..40,700;1,9..40,400&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+  <div class="page">
+    <header class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">{{ app_config.app.course }} · {{ app_config.app.author }}</p>
+        <h1>{{ app_config.app.title }}</h1>
+        <p class="lede">{{ app_config.app.subtitle }}</p>
+        <p class="desc">{{ app_config.app.description }}</p>
+      </div>
+      <aside class="hero-aside">
+        <p class="aside-label">Offline model</p>
+        <p class="aside-value">{{ app_config.model.algorithm }}</p>
+        <p class="aside-note">Saved locally as a joblib pipeline — no Colab needed to predict.</p>
+      </aside>
+    </header>
+
+    <section class="info-row" id="about">
+      <article class="info-card">
+        <h2>About this tool</h2>
+        <p>{{ app_config.app.about }}</p>
+      </article>
+      <article class="info-card">
+        <h2>How to use it</h2>
+        <ol>
+          {% for step in app_config.app.how_it_works %}
+            <li>{{ step }}</li>
+          {% endfor %}
+        </ol>
+      </article>
+      <article class="info-card info-card-note">
+        <h2>Please keep in mind</h2>
+        <p>{{ app_config.app.note }}</p>
+      </article>
+    </section>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul class="flash-list">
+          {% for category, message in messages %}
+            <li class="flash flash-{{ category }}">{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    {% if errors %}
+      <section class="panel panel-error" aria-live="polite">
+        <h2>Some data is still missing</h2>
+        <p class="error-intro">Please fill out the empty fields below, then try Predict again.</p>
+        <ul>
+          {% for err in errors %}
+            <li>{{ err }}</li>
+          {% endfor %}
+        </ul>
+      </section>
+    {% endif %}
+
+    {% if result %}
+      <section class="panel panel-result {% if result.is_at_risk %}at-risk{% else %}pass{% endif %}" aria-live="polite" id="result">
+        <p class="result-kicker">Here’s what the model thinks</p>
+        <h2 class="result-label">{{ result.label }}</h2>
+        <p class="result-detail">
+          Model class:
+          <strong>{{ result.technical_label }}</strong>
+          (AtRisk = {{ result.class }})
+        </p>
+        {% if result.probability_at_risk is defined %}
+          <div class="prob-bars" aria-hidden="false">
+            <div class="prob-row">
+              <span>Chance of passing</span>
+              <div class="bar"><i style="width: {{ (result.probability_pass * 100)|round(1) }}%"></i></div>
+              <strong>{{ '%.0f'|format(result.probability_pass * 100) }}%</strong>
+            </div>
+            <div class="prob-row">
+              <span>Chance of needing support</span>
+              <div class="bar bar-warn"><i style="width: {{ (result.probability_at_risk * 100)|round(1) }}%"></i></div>
+              <strong>{{ '%.0f'|format(result.probability_at_risk * 100) }}%</strong>
+            </div>
+          </div>
+        {% endif %}
+
+        {% if result.insights %}
+          <div class="insights">
+            <h3>What stood out after the prediction</h3>
+            <p class="insights-intro">
+              Now that you have a result, here are a few notes about this profile.
+              They are reflections after the fact — not hints for gaming the form.
+            </p>
+            <ul>
+              {% for tip in result.insights %}
+                <li>{{ tip }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+
+        <p class="result-note">
+          “May need support” means the model leans toward a final grade under 10.
+          Remember: G1, G2, and G3 were not used as inputs.
+        </p>
+      </section>
+    {% endif %}
+
+    <section class="panel form-panel">
+      <div class="panel-head">
+        <div>
+          <h2>Student profile</h2>
+          <p>
+            Fill in a student as if you only know their background and habits — no final grades.
+            Prefer not to invent every answer? Hit <strong>Surprise me</strong> for a random profile,
+            then Predict and see what the model says.
+          </p>
+        </div>
+      </div>
+
+      <div class="demo-toolbar" role="group" aria-label="Random profile">
+        <p class="demo-label">Need a starting point?</p>
+        <div class="demo-buttons">
+          <button type="button" class="btn btn-soft" id="surprise-btn" data-fill="random">Surprise me</button>
+        </div>
+        <p class="demo-hint">Builds a random valid student. It does not reveal the outcome — you still click Predict.</p>
+      </div>
+
+      <form id="predict-form" method="post" action="{{ url_for('predict') }}" novalidate>
+        {% for group in feature_groups %}
+          <fieldset class="form-section">
+            <legend>
+              <span class="section-title">{{ group.title }}</span>
+              <span class="section-blurb">{{ group.blurb }}</span>
+            </legend>
+            <div class="form-grid">
+              {% for field in group.feature_defs %}
+                <div class="field">
+                  <label for="{{ field.name }}">
+                    {{ field.label }}{% if field.required %} <span class="req">*</span>{% endif %}
+                  </label>
+                  {% if field.help %}
+                    <span class="help">{{ field.help }}</span>
+                  {% endif %}
+
+                  {% if field.type == 'categorical' %}
+                    <select id="{{ field.name }}" name="{{ field.name }}" required>
+                      <option value="" {% if values.get(field.name)|string == '' %}selected{% endif %}>Choose…</option>
+                      {% for choice in field.choices %}
+                        <option value="{{ choice.value }}"
+                          {% if values.get(field.name)|string == choice.value|string %}selected{% endif %}>
+                          {{ choice.label }}
+                        </option>
+                      {% endfor %}
+                    </select>
+                  {% else %}
+                    <input
+                      id="{{ field.name }}"
+                      name="{{ field.name }}"
+                      type="number"
+                      inputmode="numeric"
+                      required
+                      min="{{ field.min }}"
+                      max="{{ field.max }}"
+                      step="1"
+                      placeholder="Enter a number"
+                      value="{{ values.get(field.name, '') }}"
+                    />
+                  {% endif %}
+                </div>
+              {% endfor %}
+            </div>
+          </fieldset>
+        {% endfor %}
+
+        <div class="actions">
+          <button type="submit" class="btn btn-primary">Predict outcome</button>
+          <button type="submit" class="btn btn-secondary" formaction="{{ url_for('reset') }}" formmethod="post">Clear form</button>
+        </div>
+      </form>
+    </section>
+
+    <footer class="footer">
+      <p>
+        Built with a locally saved Naive Bayes pipeline.
+        Predictions stay on this computer.
+      </p>
+    </footer>
+  </div>
+
+  <script id="feature-schema" type="application/json">{{ features|tojson }}</script>
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

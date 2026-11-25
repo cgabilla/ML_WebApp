@@ -1,0 +1,38 @@
+app:
+  title: "Will this student pass Portuguese?"
+  subtitle: "A simple early-warning check for secondary school students"
+  description: >
+    Fill in what we know about a student — home background, study habits,
+    and school life — and the app estimates whether they look likely to pass
+    or may need extra support before final grades come in.
+  about: >
+    This prototype uses a Naive Bayes model trained on the UCI Student
+    Performance dataset (Portuguese course). It does not look at period
+    grades G1/G2 or the final grade G3. That keeps the question realistic:
+    can we spot risk earlier, from background and behavior alone?
+  how_it_works:
+    - "You enter student details in the form (or try a sample profile)."
+    - "The local model reads those answers the same way it did in training."
+    - "You get a Pass or At risk result, plus how confident the model is."
+  note: >
+    This is a class demo, not an official school decision tool. Use it to
+    explore the model — always treat real students with care and context.
+  author: "Cyrus Gabilla"
+  course: "Developing a Web App Prototype with Integrated SML Prediction Model"
+
+model:
+  path: "model/naive_bayes_pipeline.joblib"
+  feature_order_path: "model/feature_order.json"
+  algorithm: "Gaussian Naive Bayes"
+  show_probability: true
+
+labels:
+  negative: "Likely to pass"
+  positive: "May need support"
+  negative_class: 0
+  positive_class: 1
+
+server:
+  host: "127.0.0.1"
+  port: 5000
+  debug: false

@@ -1,0 +1,12 @@
+\contentsline {section}{\numberline {1}Introduction}{2}{section.1}%
+\contentsline {section}{\numberline {2}Overview of the Previous Machine Learning Project}{2}{section.2}%
+\contentsline {section}{\numberline {3}Model Export and Preparation}{2}{section.3}%
+\contentsline {section}{\numberline {4}Development Environment Setup}{3}{section.4}%
+\contentsline {section}{\numberline {5}Web Application Interface Development}{5}{section.5}%
+\contentsline {section}{\numberline {6}Machine Learning Model Integration}{6}{section.6}%
+\contentsline {section}{\numberline {7}Application Testing and Results}{7}{section.7}%
+\contentsline {section}{\numberline {8}Offline Functionality Verification}{10}{section.8}%
+\contentsline {section}{\numberline {9}AI-Assisted Coding Disclosure}{10}{section.9}%
+\contentsline {section}{\numberline {10}Challenges and Observations}{11}{section.10}%
+\contentsline {section}{\numberline {11}Conclusion}{11}{section.11}%
+\contentsline {section}{\numberline {12}References}{11}{section.12}%
