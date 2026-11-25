@@ -1,6 +1,6 @@
 # Student At-Risk Prediction Web App
 
-MCAIPAT Laboratory 03 — local Flask prototype that loads the Laboratory 02 **Naive Bayes** pipeline and predicts whether a Portuguese secondary-school student is **at risk of failing** (`AtRisk = 1` when final grade G3 &lt; 10).
+An ML Web App local Flask prototype that loads the **Naive Bayes** pipeline and predicts whether a Portuguese secondary-school student is **at risk of failing** (`AtRisk = 1` when final grade G3 &lt; 10).
 
 Predictions run **offline** from a local `.joblib` file. No Google Colab and no cloud prediction API are required at runtime.
 
@@ -15,7 +15,7 @@ Predictions run **offline** from a local `.joblib` file. No Google Colab and no 
 ## Project layout
 
 ```
-Gabilla_Cyrus_ML_WebApp/
+ML_WebApp/
   app.py
   requirements.txt
   config/app_config.yaml
@@ -37,7 +37,7 @@ Gabilla_Cyrus_ML_WebApp/
 ## Quick start
 
 ```bash
-cd Gabilla_Cyrus_ML_WebApp
+cd ML_WebApp
 python3 -m venv .venv
 source .venv/bin/activate          # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
@@ -70,4 +70,4 @@ Colab export snippet for assignment screenshots: run `python scripts/colab_expor
 
 ## Author
 
-Cyrus Gabilla — MCAIPAT Laboratory 03
+Cyrus Gabilla
