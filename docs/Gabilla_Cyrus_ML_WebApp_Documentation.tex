@@ -226,13 +226,58 @@ Predictions are produced by the local \texttt{.joblib} file inside the project. 
 \section{AI-Assisted Coding Disclosure}
 %% ============================================================
 
-AI-assisted coding was used during development. In particular, \textbf{Gemini} was consulted for ideas on web app structure, Flask integration, clearer UI wording, and documentation drafts.
+This section answers the Laboratory required AI-Assisted Coding Disclosure items.
 
-All AI-generated suggestions were reviewed by the student author, adapted to the actual Laboratory feature set and exported Naive Bayes pipeline, and verified through local testing (\texttt{python app.py}, form validation for missing inputs, and live predictions from the saved \texttt{joblib} model). No prediction results in this application are hard-coded; outputs come from the locally loaded model.
+\subsection*{AI Tool Used}
+Google Gemini was used during development of this web application prototype.
+Copilot and ChatGPT were not used for this Laboratory submission.
 
-This disclosure is provided in narrative form. Separate AI chat screenshots are not included with this report.
+\subsection*{Purpose}
+Gemini was used to support practical development tasks allowed by the handout, including:
+\begin{itemize}[leftmargin=*]
+  \item planning a Flask application that loads a saved scikit-learn pipeline;
+  \item drafting HTML/CSS/JavaScript for a clearer student input interface;
+  \item organizing feature configuration so the form matches the trained 30-feature set (without \texttt{G1}/\texttt{G2}/\texttt{G3});
+  \item improving validation and Clear-form behavior;
+  \item drafting README / setup instructions and documentation narratives.
+\end{itemize}
 
-%% ============================================================
+\subsection*{Sample Prompts}
+At least three actual prompts used during development:
+
+\begin{enumerate}[leftmargin=*]
+  \item ``Plan a local Flask web app that loads my Naive Bayes joblib pipeline for student AtRisk prediction, with a form for all 30 features (no G1/G2/G3), Predict and Clear, and README install/run/exit steps.''
+  \item ``Make the student form configurable with YAML, group the fields so they are easier to understand, remove default filled values so Clear really empties the form, and only keep a Surprise me random filler so users cannot easily game Pass vs At risk.''
+  \item ``Help me write the technical documentation sections for model export, Flask integration, offline verification, and AI-assisted coding disclosure based on the Laboratory handout requirements.''
+\end{enumerate}
+
+Related follow-up prompts also covered UI polish (About / How to use), post-prediction insight wording, and packaging the project for submission.
+
+\subsection*{AI-Generated Assistance}
+AI assistance contributed drafts or guidance for:
+\begin{itemize}[leftmargin=*]
+  \item Flask routing and Joblib model-loading structure in \texttt{app.py};
+  \item HTML template layout and CSS styling for the form and result panel;
+  \item JavaScript for the Surprise me helper and client-side missing-field checks;
+  \item YAML configuration ideas for app metadata and feature fields;
+  \item documentation wording for setup, testing, and disclosure.
+\end{itemize}
+
+The following were reviewed and finalized by the student against the real prior-model workflow (not left as unchecked AI output): selecting only the Naive Bayes pipeline, preserving training feature order/preprocessing, removing outcome-hint UI, aligning scikit-learn versions with the Colab export, and confirming offline local inference.
+
+\subsection*{Verification}
+AI suggestions were tested, reviewed, and modified before submission. Verification steps included:
+\begin{itemize}[leftmargin=*]
+  \item creating a local virtual environment and running \texttt{python app.py};
+  \item confirming startup loads \texttt{model/naive\_bayes\_pipeline.joblib};
+  \item performing at least three successful predictions with different inputs (Figures~\ref{fig:test-pass},~\ref{fig:test-risk},~\ref{fig:test-mixed});
+  \item testing validation when required fields are empty (Figure~\ref{fig:test-validation});
+  \item confirming outputs change with inputs and are not hard-coded class labels.
+\end{itemize}
+
+\subsection*{Note on AI interaction screenshots}
+Separate Gemini chat screenshots were not retained during development, so they are not attached as additional figures here. Evidence that the assisted implementation was reviewed and works is provided by the environment, interface, prediction, and validation screenshots in the earlier sections of this document.
+
 \section{Challenges and Observations}
 %% ============================================================
 

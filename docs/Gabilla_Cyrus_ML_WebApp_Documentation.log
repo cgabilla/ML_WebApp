@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.8.19)  21 NOV 2026 17:50
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.11.23)  25 NOV 2026 11:42
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -609,7 +609,16 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[11] (./Gabilla_Cyrus_ML_WebApp_Documentation.aux)
+[11]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[12] (./Gabilla_Cyrus_ML_WebApp_Documentation.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-22>
@@ -619,12 +628,12 @@ as not changed.
 (rerunfilecheck)             Checksum: D61483C4E9B83201525D4DBA0089447B;2250.
  ) 
 Here is how much of TeX's memory you used:
- 11688 strings out of 476182
- 188829 string characters out of 5795595
- 1933975 words of memory out of 5000000
- 33530 multiletter control sequences out of 15000+600000
+ 11692 strings out of 476106
+ 188857 string characters out of 5793932
+ 1935975 words of memory out of 5000000
+ 33539 multiletter control sequences out of 15000+600000
  564571 words of font info for 58 fonts, out of 8000000 for 9000
- 14 hyphenation exceptions out of 8191
+ 59 hyphenation exceptions out of 8191
  75i,11n,79p,602b,565s stack positions out of 10000i,1000n,20000p,200000b,200000s
  </home/cyrus/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1095.600
 pk></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></u
@@ -635,11 +644,11 @@ xmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dis
 t/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts
 /type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1
 /public/amsfonts/cm/cmtt10.pfb>
-Output written on Gabilla_Cyrus_ML_WebApp_Documentation.pdf (11 pages, 1152657 
+Output written on Gabilla_Cyrus_ML_WebApp_Documentation.pdf (12 pages, 1156288 
 bytes).
 PDF statistics:
- 212 PDF objects out of 1000 (max. 8388607)
- 170 compressed objects within 2 object streams
- 45 named destinations out of 1000 (max. 500000)
+ 224 PDF objects out of 1000 (max. 8388607)
+ 181 compressed objects within 2 object streams
+ 49 named destinations out of 1000 (max. 500000)
  147 words of extra memory for PDF output out of 10000 (max. 10000000)
 

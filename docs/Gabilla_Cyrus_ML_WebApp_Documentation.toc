@@ -7,6 +7,6 @@
 \contentsline {section}{\numberline {7}Application Testing and Results}{7}{section.7}%
 \contentsline {section}{\numberline {8}Offline Functionality Verification}{10}{section.8}%
 \contentsline {section}{\numberline {9}AI-Assisted Coding Disclosure}{10}{section.9}%
-\contentsline {section}{\numberline {10}Challenges and Observations}{11}{section.10}%
-\contentsline {section}{\numberline {11}Conclusion}{11}{section.11}%
-\contentsline {section}{\numberline {12}References}{11}{section.12}%
+\contentsline {section}{\numberline {10}Challenges and Observations}{12}{section.10}%
+\contentsline {section}{\numberline {11}Conclusion}{12}{section.11}%
+\contentsline {section}{\numberline {12}References}{12}{section.12}%
